@@ -1,0 +1,5 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* This ensures that the canvas is not clipped by the body or html element */
+}

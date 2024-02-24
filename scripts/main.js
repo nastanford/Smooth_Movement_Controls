@@ -8,6 +8,11 @@ let y = canvas.height / 2; // Initial y position at the center of the canvas
 let vx = 0;
 let vy = 0;
 
+const acceleration = 0.2; // Rate of acceleration
+const maxSpeed = 5; // Maximum speed
+
+const squareSize = 50; // Size of the square
+
 function animate() {
   // Clear the canvas before drawing the square at its new position
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -15,9 +20,21 @@ function animate() {
   // Update the position of the square
   x += vx;
   y += vy;
+
+  // Boundary checks to keep the square within the canvas
+  if (x < 0) {
+    x = 0;
+  } else if (x > canvas.width - squareSize) {
+    x = canvas.width - squareSize;
+  }
+  if (y < 0) {
+    y = 0;
+  } else if (y > canvas.height - squareSize) {
+    y = canvas.height - squareSize;
+  }
   
   // Draw the square at its new position
-  ctx.fillRect(x, y, 10, 10);
+  ctx.fillRect(x, y, squareSize, squareSize);
   
   // Request the next animation frame to continue the animation loop
   requestAnimationFrame(animate);
@@ -25,27 +42,3 @@ function animate() {
 
 // Start the animation loop
 animate();
-
-// Event listener to handle key presses
-addEventListener("keydown", function(e) {
-  // Update velocity based on the pressed key
-  if (e.code === "KeyW") {
-    vy = -5; // Move up
-  } else if (e.code === "KeyS") {
-    vy = 5; // Move down
-  } else if (e.code === "KeyA") {
-    vx = -5; // Move left
-  } else if (e.code === "KeyD") {
-    vx = 5; // Move right
-  }
-});
-
-// Event listener to handle key releases
-addEventListener("keyup", function(e) {
-  // Reset velocity when the key is released
-  if (e.code === "KeyW" || e.code === "KeyS") {
-    vy = 0;
-  } else if (e.code === "KeyA" || e.code === "KeyD") {
-    vx = 0;
-  }
-});
